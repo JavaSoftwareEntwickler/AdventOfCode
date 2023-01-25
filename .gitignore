@@ -27,3 +27,6 @@ hs_err_pid*
 
 # Out IntelliJ Folder
 out/
+# idea IntelliJ Folder
+.idea/
+

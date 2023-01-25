@@ -1,0 +1,96 @@
+-- Giorno 7: Non c'è più spazio sul dispositivo...
+Durante la spedizione si sentono gli uccelli cinguettare e le gocce di pioggia colpire le foglie. A volte si sentono anche suoni molto più forti in lontananza; ma quanto diventano grandi gli animali da queste parti?
+
+Il dispositivo che vi hanno dato gli Elfi ha problemi non solo con il sistema di comunicazione. Provate a eseguire un aggiornamento del sistema:
+
+$ system-update --please --pretty-please-with-sugar-on-top
+Errore: Non c'è più spazio sul dispositivo
+Forse è possibile eliminare alcuni file per fare spazio all'aggiornamento?
+
+Si naviga nel filesystem per valutare la situazione e si salva l'output del terminale risultante (l'input del puzzle). Per esempio:
+
+$ cd /
+$ ls
+dir a
+14848514 b.txt
+8504156 c.dat
+dir d
+$ cd a
+$ ls
+dir e
+29116 f
+2557 g
+62596 h.lst
+$ cd e
+$ ls
+584 i
+$ cd ...
+$ cd ...
+$ cd d
+$ ls
+4060174 j
+8033020 d.log
+5626152 d.ext
+7214296 k
+Il filesystem è costituito da un albero di file (dati semplici) e directory (che possono contenere altre directory o file). La directory più esterna si chiama /. È possibile navigare all'interno del filesystem, spostandosi all'interno o all'esterno delle directory ed elencando il contenuto della directory in cui ci si trova.
+
+All'interno dell'output del terminale, le righe che iniziano con $ sono comandi eseguiti, proprio come avviene nei computer moderni:
+
+cd significa cambiare directory. Cambia la directory corrente, ma il risultato specifico dipende dall'argomento:
+cd x si sposta di un livello: cerca nella directory corrente la directory denominata x e la rende la directory corrente.
+cd .. si sposta di un livello: trova la directory che contiene la directory corrente e la rende tale.
+cd / cambia la directory corrente in quella più esterna, /.
+ls significa elenco. Stampa tutti i file e le directory immediatamente contenuti nella directory corrente:
+123 abc significa che la directory corrente contiene un file di nome abc di dimensioni 123.
+dir xyz significa che la directory corrente contiene una directory di nome xyz.
+Dati i comandi e l'output dell'esempio precedente, è possibile determinare che il filesystem ha il seguente aspetto:
+
+- / (dir)
+  - a (dir)
+    - e (dir)
+      - i (file, dimensione=584)
+    - f (file, dimensione=29116)
+    - g (file, dimensione=2557)
+    - h.lst (file, dimensione=62596)
+  - b.txt (file, dimensione=14848514)
+  - c.dat (file, dimensione=8504156)
+  - d (dir)
+    - j (file, dimensione=4060174)
+    - d.log (file, dimensione=8033020)
+    - d.ext (file, dimensione=5626152)
+    - k (file, dimensione=7214296)
+Qui ci sono quattro directory: / (la directory più esterna), a e d (che si trovano in /) ed e (che si trova in a). Queste directory contengono anche file di varie dimensioni.
+
+Dal momento che il disco è pieno, il primo passo da compiere è probabilmente quello di trovare le directory che sono buone candidate all'eliminazione. A tale scopo, è necessario determinare la dimensione totale di ogni directory. La dimensione totale di una directory è la somma delle dimensioni dei file che contiene, direttamente o indirettamente. (Le directory stesse non contano come dimensioni intrinseche).
+
+Le dimensioni totali delle directory di cui sopra possono essere trovate come segue:
+
+La dimensione totale della directory e è 584 perché contiene un singolo file i di dimensione 584 e nessun'altra directory.
+La directory a ha una dimensione totale di 94853 perché contiene i file f (dimensione 29116), g (dimensione 2557) e h.lst (dimensione 62596), più il file i indirettamente (a contiene e che contiene i).
+La directory d ha una dimensione totale di 24933642.
+Come directory più esterna, / contiene tutti i file. La sua dimensione totale è 48381165, la somma delle dimensioni di ogni file.
+Per iniziare, trovare tutte le directory con una dimensione totale di almeno 100000, quindi calcolare la somma delle loro dimensioni totali. Nell'esempio precedente, queste directory sono a ed e; la somma delle loro dimensioni totali è 95437 (94853 + 584). (Come in questo esempio, questo processo può contare i file più di una volta).
+
+Trovare tutte le directory con una dimensione totale di almeno 100000. Qual è la somma delle dimensioni totali di queste directory?
+-----------------
+
+
+parte due:
+
+
+Ora si è pronti a scegliere una directory da eliminare.
+
+Lo spazio totale su disco disponibile per il filesystem è 70000000. Per eseguire l'aggiornamento, è necessario uno spazio inutilizzato di almeno 30000000. È necessario trovare una directory da eliminare che liberi spazio sufficiente per eseguire l'aggiornamento.
+
+Nell'esempio precedente, la dimensione totale della directory più esterna (e quindi la quantità totale di spazio utilizzato) è 48381165; ciò significa che la dimensione dello spazio inutilizzato deve essere attualmente di 21618835, che non corrisponde ai 30000000 richiesti dall'aggiornamento. Pertanto, l'aggiornamento richiede ancora l'eliminazione di una directory con una dimensione totale di almeno 8381165 prima di poter essere eseguito.
+
+Per ottenere questo risultato, si hanno le seguenti opzioni:
+
+Eliminare la directory e, che aumenterebbe lo spazio inutilizzato di 584.
+Eliminare la directory a, che aumenterebbe lo spazio inutilizzato di 94853.
+Eliminare la directory d, che aumenterebbe lo spazio inutilizzato di 24933642.
+Eliminare la directory /, che aumenterebbe lo spazio inutilizzato di 48381165.
+Le directory e e a sono entrambe troppo piccole; eliminandole non si libererebbe abbastanza spazio. Tuttavia, le directory d e / sono entrambe abbastanza grandi! Tra queste, scegliete la più piccola: d, che aumenta lo spazio inutilizzato di 24933642.
+
+Individuare la directory più piccola che, se eliminata, libererebbe spazio sufficiente sul filesystem per eseguire l'aggiornamento. Qual è la dimensione totale di questa directory?
+

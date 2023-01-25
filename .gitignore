@@ -59,4 +59,11 @@ bin/
 .DS_Store
 
 
+# Xml configFiles
+*.xml
+
+# Out IntelliJ Folder
+out/
+# idea IntelliJ Folder
+.idea/
 
